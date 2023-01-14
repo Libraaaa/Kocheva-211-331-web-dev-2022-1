@@ -67,6 +67,14 @@
             </div>
         </div>
 
+        <div class="alerts d-flex" style="justify-content: center;">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-danger"
+                style="display: none; width: 50%;">
+                Возникла ошибка...
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+
         <div class="list-route p-3 mx-auto">
             <div class="container p-0 ">
 
@@ -92,52 +100,42 @@
 
 
                 <!-- таблица маршрутов -->
+                <div class="route-elements"
+                    data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes?api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a">
+                    <div class="card card-route" style="margin-bottom: 16px;">
+                        <h4 class="card-header" style="color: rgb(4 94 60);"><span class="item-col-name"></span></h4>
+                        <div class="card-body">
+                            <h5 class="card-title">Описание</h5>
+                            <p class="card-text"><span class="item-col-desc"></span></p>
+                            <h5 class="card-title">Основные объекты</h5>
+                            <p class="card-text"><span class="item-col-mainobjects"></span></p>
+                            <button type="btn" class="btn btn-primary" id="change-btn-route">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table-bordered routes-table"
-                        data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes?api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a">
-                        <thead>
-                            <tr style="background-color: rgb(244, 229, 207);">
-                                <th>Название</th>
-                                <th>Описание</th>
-                                <th colspan="2">Основные объекты</th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-route">
-                            <tr class="route-list-item">
-                                <td class="item-col-first"></td>
-                                <td class="item-col-second"></td>
-                                <td class="item-col-third"></td>
-                                <td class="item-col-change">
-                                    <button class="change-btn-route">Выбрать</button>
-                                </td>
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-
-
                     <nav aria-label="Page navigation" class="d-flex d-md-block">
-                        <ul class="pagination pagination-routes mt-3 ms-5 ps-5 ps-md-0 ms-md-0">
-                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                        <ul class="pagination pagination-routes mt-3">
+                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
                         </ul>
                     </nav>
-
                 </div>
+
             </div>
         </div>
 
         <template id="route-template">
-            <tr class="route-list-item">
-                <td class="item-col-name align-top"></td>
-                <td class="item-col-desc align-top"></td>
-                <td class="item-col-mainobjects align-top"></td>
-                <td class="item-col-change">
-                    <button class="change-btn-route">Выбрать</button>
-                </td>
-            </tr>
+            <div class="card card-route" style="margin-bottom: 16px;">
+                <h4 class="card-header" style="color: rgb(4 94 60);"><span class="item-col-name"></span></h4>
+                <div class="card-body">
+                    <h5 class="card-title">Описание</h5>
+                    <p class="card-text"><span class="item-col-desc"></span></p>
+                    <h5 class="card-title">Основные объекты</h5>
+                    <p class="card-text"><span class="item-col-mainobjects"></span></p>
+                    <button type="btn" class="btn btn-primary" id="change-btn-route">Выбрать</button>
+                </div>
+            </div>
         </template>
 
         <!-- гиды -->
@@ -164,53 +162,46 @@
 
 
                 <!-- таблица гидов -->
-                <div class="table-responsive">
-                    <table class="table-bordered guides-table"
-                        data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru">
-                        <thead>
-                            <tr style="background-color: rgb(244, 229, 207);">
-                                <th></th>
-                                <th>ФИО</th>
-                                <th>Языки</th>
-                                <th>Опыт работы (в годах)</th>
-                                <th>Стоимость услуг в час</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-guide">
-                            <tr class="guide-list-item">
-                                <td class="item-col-icon">
-                                    <img src="../images/guide_icon.png" style="width: 100%;">
-                                </td>
-                                <td class="item-col-name"></td>
-                                <td class="item-col-language"></td>
-                                <td class="item-col-experience"></td>
-                                <td class="item-col-price-per-hour"></td>
-                                <td class="item-col-change">
-                                    <button class="change-btn-guide" data-bs-toggle="modal"
-                                        data-bs-target="#show-order">Выбрать</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="guide-elements" data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                        <div class="col">
+                            <div class="card card-guide" style="width: 15rem; margin-bottom: 16px;">
+                                <img src="../images/guide_icon.png" class="card-img-top" alt="">
+                                <div class="card-body" style="--bs-card-title-spacer-y: 0;">
+                                    <h5 class="card-title">ФИО</h5>
+                                    <p class="card-text"><span class="item-col-name"></span></p>
+                                    <h5 class="card-title">Языки</h5>
+                                    <p class="card-text"><span class="item-col-language"></span></p>
+                                    <h5 class="card-title">Опыт работы (в годах)</h5>
+                                    <p class="card-text"><span class="item-col-experience"></span></p>
+                                    <h5 class="card-title">Стоимость услуг в час</h5>
+                                    <p class="card-text"><span class="item-col-price-per-hour"></span></p>
+                                    <button type="btn" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#show-order" id="change-btn-guide">Выбрать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <template id="guide-template">
-                    <tr class="guide-list-item">
-                        <td class="item-col-icon">
-                            <img src="../images/guide_icon.png" style="width: 100%;">
-                        </td>
-                        <td class="item-col-name align-top" style="padding: 10px;"></td>
-                        <td class="item-col-language align-top" style="padding: 10px;"></td>
-                        <td class="item-col-experience align-middle" style="padding: 10px; text-align: center;">
-                        </td>
-                        <td class="item-col-price-per-hour align-middle" style="padding: 10px; text-align: center;">
-                        </td>
-                        <td class="item-col-change">
-                            <button class="change-btn-guide" data-bs-toggle="modal"
-                                data-bs-target="#show-order">Выбрать</button>
-                        </td>
-                    </tr>
+                    <div class="col">
+                        <div class="card card-guide" style="width: 15rem; margin-bottom: 16px;">
+                            <img src="../images/guide_icon.png" class="card-img-top" alt="">
+                            <div class="card-body" style="--bs-card-title-spacer-y: 0;">
+                                <h5 class="card-title">ФИО</h5>
+                                <p class="card-text"><span class="item-col-name"></span></p>
+                                <h5 class="card-title">Языки</h5>
+                                <p class="card-text"><span class="item-col-language"></span></p>
+                                <h5 class="card-title">Опыт работы (в годах)</h5>
+                                <p class="card-text"><span class="item-col-experience"></span></p>
+                                <h5 class="card-title">Стоимость услуг в час</h5>
+                                <p class="card-text"><span class="item-col-price-per-hour"></span></p>
+                                <button type="btn" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#show-order" id="change-btn-guide">Выбрать</button>
+                            </div>
+                        </div>
+                    </div>
                 </template>
 
             </div>
@@ -276,7 +267,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="text-muted" style="text-align: left; font-size: 13px;">
-                                        Доступное время экскурсии с 9:00 до 22:30
+                                        Доступное время экскурсии с 9:00 до 23:00 с интервалами 30 мин
                                     </div>
                                 </div>
                             </div>
@@ -356,7 +347,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+                    <button type="button" class="btn btn-secondary" id="btn-cancel"
+                        data-bs-dismiss="modal">Отменить</button>
                     <button type="button" class="btn btn-primary" id="send-order" data-bs-dismiss="modal"
                         data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a">
                         Отправить

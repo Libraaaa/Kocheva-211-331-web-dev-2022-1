@@ -47,56 +47,46 @@
 
         <div class="list-order p-3 mx-auto" style="margin-bottom: 4rem;">
             <div class="container p-0">
-                <h2 class="list-route-h2 ">Список пешеходных маршрутов</h2>
-                <div class="table-responsive">
+                <h2 class="list-order-h2">Заявки</h2>
 
-                    <table class="table-bordered orders-table"
-                        data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a">
-                        <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Название маршрута</th>
-                                <th>Дата</th>
-                                <th>Стоимость</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-order">
-                            <tr class="order-list-item">
-                                <td class="item-col-num"></td>
-                                <td class="item-col-name"></td>
-                                <td class="item-col-date"></td>
-                                <td class="item-col-price"></td>
-                                <td class="item-col-btn">
-                                    <div class="actions ms-auto">
-                                        <i class="bi bi-eye me-2" data-bs-toggle="modal" data-bs-target="#show-order"
-                                            data-action="show"></i>
-                                        <i class="bi bi-pencil-fill me-2" data-bs-toggle="modal"
-                                            data-bs-target="#show-order" data-action="edit"></i>
-                                        <i class="bi bi-trash3" data-bs-toggle="modal" data-bs-target="#del-order"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="elements"
+                    data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a">
+                    <div class="card" style="margin-bottom: 16px;">
+                        <h5 class="card-header"> <span class="item-col-name"></span> </h5>
+                        <div class="card-body">
+                            <p class="card-text"> <span class="item-col-date"></span> </p>
+                            <p class="card-text"> <span class="item-col-price"></span> </p>
+                            <p class="item-col-btn">
+                            <div class="actions ms-auto">
+                                <i class="bi bi-eye me-2" data-bs-toggle="modal" data-bs-target="#show-order"
+                                    data-action="show"></i>
+                                <i class="bi bi-pencil-fill me-2" data-bs-toggle="modal" data-bs-target="#show-order"
+                                    data-action="edit"></i>
+                                <i class="bi bi-trash3" data-bs-toggle="modal" data-bs-target="#del-order"></i>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-                    <nav aria-label="Page navigation" class="d-flex d-md-block">
-                        <ul class="pagination pagination-orders mt-3 ms-5 ps-5 ps-md-0 ms-md-0">
-                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+
+                <nav aria-label="Page navigation" class="d-flex d-md-block">
+                    <ul class="pagination pagination-orders mt-3 ms-5 ps-5 ps-md-0 ms-md-0">
+                        <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                        </ul>
-                    </nav>
-                </div>
+                    </ul>
+                </nav>
             </div>
         </div>
+
         <template id="order-template">
-            <tr class="order-list-item">
-                <td class="item-col-num align-middle" style="text-align: center;"></td>
-                <td class="item-col-name align-middle" style="text-align: center;"></td>
-                <td class="item-col-date align-middle" style="text-align: center;"></td>
-                <td class="item-col-price align-middle" style="text-align: center;"></td>
-                <td class="item-col-btn">
+            <div class="card" style="margin-bottom: 16px;">
+                <h5 class="card-header"> <span class="item-col-name"></span> </h5>
+                <div class="card-body">
+                    <p class="card-text"> <span class="item-col-date"></span> </p>
+                    <p class="card-text"> <span class="item-col-price"></span> </p>
+                    <p class="item-col-btn">
                     <div class="actions ms-auto">
                         <i class="bi bi-eye me-2" data-bs-toggle="modal" data-bs-target="#show-order"
                             data-action="show"></i>
@@ -104,8 +94,9 @@
                             data-action="edit"></i>
                         <i class="bi bi-trash3" data-bs-toggle="modal" data-bs-target="#del-order"></i>
                     </div>
-                </td>
-            </tr>
+                    </p>
+                </div>
+            </div>
         </template>
 
     </main>
@@ -255,7 +246,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-                    <button type="button" class="btn btn-danger delete-order-btn" data-bs-dismiss="modal" data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders">Да</button>
+                    <button type="button" class="btn btn-danger delete-order-btn" data-bs-dismiss="modal"
+                        data-url="http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders">Да</button>
                 </div>
             </div>
         </div>

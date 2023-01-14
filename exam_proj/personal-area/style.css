@@ -44,7 +44,7 @@ h2 {
     background-color: white;
 }
 
-.list-route-h2 {
+.list-order-h2 {
     text-align: left;
     color: black !important;
 }
@@ -151,4 +151,10 @@ form .row {
     .list-order {
         max-width: 90%;
     }
+
 }
+/* @media screen and (max-width: 800px) {
+    .orders-table tr {
+        display: block;
+    }
+} */

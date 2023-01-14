@@ -3,7 +3,7 @@ let orderTemplate = document.querySelector('#order-template');
 let mainOrder;
 
 function downloadOrders() {
-    let ordersTable = document.querySelector('.orders-table');
+    let ordersTable = document.querySelector('.elements');
     let url = new URL(ordersTable.dataset.url);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -29,7 +29,7 @@ function downloadOrders() {
 
 // заявки
 function renderOrders(orders, page) {
-    let bodyOrder = document.querySelector('.tbody-order');
+    let bodyOrder = document.querySelector('.elements');
     bodyOrder.innerHTML = '';
     let notesOnPage = 5;
     let start = (page - 1) * notesOnPage;
@@ -62,10 +62,27 @@ function paginationItemHandler(event) {
     renderOrders(mainOrder, event.target.innerText);
 }
 
+//табличный элемент
+// function createOrderListItemElement(order) {
+//     let itemElement = orderTemplate.content.firstElementChild.cloneNode(true);
+//     itemElement.id = order.id;
+//     itemElement.querySelector('.item-col-num').innerHTML = order.id;
+//     let nameRoute = itemElement.querySelector('.item-col-name');
+//     nameRoute.innerHTML = order.route_id;
+//     let date = itemElement.querySelector('.item-col-date');
+//     date.innerHTML = order.date;
+//     let price = itemElement.querySelector('.item-col-price');
+//     price.innerHTML = order.price + ' руб.';
+//     itemElement.querySelector('.bi-trash3').addEventListener('click', deleteBtnModalHandler);
+
+//     return itemElement;
+// }
+
+//элемент карточки
 function createOrderListItemElement(order) {
     let itemElement = orderTemplate.content.firstElementChild.cloneNode(true);
     itemElement.id = order.id;
-    itemElement.querySelector('.item-col-num').innerHTML = order.id;
+    // itemElement.querySelector('.item-col-num').innerHTML = order.id;
     let nameRoute = itemElement.querySelector('.item-col-name');
     nameRoute.innerHTML = order.route_id;
     let date = itemElement.querySelector('.item-col-date');

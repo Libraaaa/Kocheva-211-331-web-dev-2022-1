@@ -4,7 +4,7 @@ let responce;
 
 let searchRoutes;
 function downloadRoutes() {
-    let routesTable = document.querySelector('.routes-table');
+    let routesTable = document.querySelector('.route-elements');
     let url = new URL(routesTable.dataset.url);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -20,7 +20,7 @@ function downloadRoutes() {
 
 // маршруты
 function renderRoutes(routes, page) {
-    let bodyRoute = document.querySelector('.tbody-route');
+    let bodyRoute = document.querySelector('.route-elements');
     bodyRoute.innerHTML = '';
     let notesOnPage = 10;
     let start = (page - 1) * notesOnPage;
@@ -64,7 +64,7 @@ function createRouteListItemElement(route) {
     desc.innerHTML = route.description;
     let mainObject = itemElement.querySelector('.item-col-mainobjects');
     mainObject.innerHTML = route.mainObject;
-    itemElement.querySelector('.change-btn-route').addEventListener('click', changeRouteBtnHandler);
+    itemElement.querySelector('#change-btn-route').addEventListener('click', changeRouteBtnHandler);
     return itemElement;
 }
 // 
@@ -72,7 +72,7 @@ function createRouteListItemElement(route) {
 
 let searchGuides;
 function downloadGuides(route_id) {
-    let guidesTable = document.querySelector('.guides-table');
+    let guidesTable = document.querySelector('.guide-elements');
     let url = new URL(guidesTable.dataset.url);
     url.pathname = '/api/routes/' + route_id + '/guides';
     url.search = 'api_key=83d0d1af-0b9b-484e-bfc0-a2e63b7a456a';
@@ -89,7 +89,7 @@ function downloadGuides(route_id) {
 
 // гиды
 function renderGuides(guides) {
-    let bodyGuide = document.querySelector('.tbody-guide');
+    let bodyGuide = document.querySelector('.guide-elements').querySelector('.row');
     bodyGuide.innerHTML = '';
     for (let i = 0; i < guides.length; i++) {
         bodyGuide.append(createGuideListItemElement(guides[i]));
@@ -106,33 +106,33 @@ function createGuideListItemElement(guide) {
     language.innerHTML = guide.language;
     let experience = itemElement.querySelector('.item-col-experience');
     experience.innerHTML = guide.workExperience;
-    // let routeId = guide.route_id;
     let pricePerHour = itemElement.querySelector('.item-col-price-per-hour');
     pricePerHour.innerHTML = guide.pricePerHour + ' руб.';
-    itemElement.querySelector('.change-btn-guide').addEventListener('click', changeGuideBtnHandler);
+    itemElement.querySelector('#change-btn-guide').addEventListener('click', changeGuideBtnHandler);
+    console.log(itemElement);
     return itemElement;
 }
 
 let itElemId = 0;
 function changeRouteBtnHandler(event) {
-    let itemElement = event.target.closest('.route-list-item');
+    let itemElement = event.target.closest('.card-route');
     document.querySelector('.list-guide').style.display = 'block';
     let span = document.querySelector('.name-route');
     if (itElemId == itemElement.id) {
-        itemElement.style.backgroundColor = '';
+        itemElement.style.boxShadow = '';
         document.querySelector('.list-guide').style.display = 'none';
         itElemId = 0;
     } else
         if (itElemId != 0) {
+            itElemId = itemElement.id;
+            document.getElementById(itElemId).style.boxShadow = '';
+            itemElement.style.boxShadow = '0 0 10px #842029';
             document.querySelector('.list-guide').style.display = 'block';
-            document.getElementById(itElemId).style.backgroundColor = '';
-            itemElement.style.backgroundColor = '#bce2bc';
             document.querySelector('.list-guide').scrollIntoView();
             span.innerHTML = '«' + itemElement.querySelector('.item-col-name').innerHTML + '»';
-            itElemId = itemElement.id;
         } else {
             itElemId = itemElement.id;
-            itemElement.style.backgroundColor = '#bce2bc';
+            itemElement.style.boxShadow = '0 0 10px #842029';
             document.querySelector('.list-guide').scrollIntoView();
             span.innerHTML = '«' + itemElement.querySelector('.item-col-name').innerHTML + '»';
 
@@ -141,22 +141,22 @@ function changeRouteBtnHandler(event) {
 }
 
 function changeGuideBtnHandler(event) {
-    let itemElement = event.target.closest('.guide-list-item');
+    let itemElement = event.target.closest('.col');
 
     //если два раза нажать на одну и ту же кнопку
     if (guideElemId == itemElement.id) {
-        itemElement.style.backgroundColor = '';
+        // itemElement.style.boxShadow = '';
         guideElemId = 0;
     } else
         //перевыбор с одного поля на другое
         if (guideElemId != 0) {
-            document.getElementById(guideElemId).style.backgroundColor = '';
-            itemElement.style.backgroundColor = '#bce2bc';
             guideElemId = itemElement.id;
             newOrderModal(itemElement);
+            // document.getElementById(guideElemId).style.boxShadow = '';
+            // itemElement.style.boxShadow = '0 0 10px rgb(211, 199, 97)';
         } else {
             guideElemId = itemElement.id;
-            itemElement.style.backgroundColor = '#bce2bc';
+            // itemElement.style.boxShadow = '0 0 10px rgb(211, 199, 97)';
             newOrderModal(itemElement);
         }
 }
@@ -165,21 +165,22 @@ function changeGuideBtnHandler(event) {
 
 //Оформление заявки
 function newOrderModal(guideElement) {
+    // let guideElement = document.getElementById(guideElemId);
+    // console.log(guideElemId, guideElement);
     let modalWindow = document.querySelector('.modal');
     let spanGuideName = modalWindow.querySelector('.guide-name');
     spanGuideName.innerHTML = guideElement.querySelector('.item-col-name').innerHTML;
-
+    console.log(spanGuideName);
     let routeElement = document.querySelector('.list-guide-h2');
     let spanRouteName = modalWindow.querySelector('.route-name');
     spanRouteName.innerHTML = routeElement.querySelector('.name-route').innerHTML;
+    console.log(spanRouteName);
 
     calculateTotalPrice();
-    document.querySelector('#send-order').addEventListener('click', showAlertHandler);
-    document.getElementById(guideElemId).style.backgroundColor = '';
-    document.getElementById(itElemId).style.backgroundColor = '';
+    // document.querySelector('#send-order').addEventListener('click', showSuccessAlertHandler);
+    // document.querySelector('#send-order').addEventListener('click', showErrorAlertHandler);
 
-
-
+    
 }
 
 
@@ -277,11 +278,21 @@ function optionSecondtHandler(event) {
     calculateTotalPrice();
 }
 
-function showAlertHandler(event) {
+function showSuccessAlertHandler(event) {
     document.querySelector('.list-guide').style.display = 'none';
     let alertSuccess = document.querySelector('#alert-success');
+    console.log(alertSuccess, 'success');
     alertSuccess.style.display = 'block';
     alertSuccess.scrollIntoView();
+}
+
+function showErrorAlertHandler(event) {
+    document.querySelector('.list-guide').style.display = 'none';
+    let alertDanger = document.querySelector('#alert-danger');
+    console.log(alertDanger, 'error');
+
+    alertDanger.style.display = 'block';
+    alertDanger.scrollIntoView();
 }
 
 //
@@ -316,10 +327,19 @@ async function postOrder(event) {
     formData.append('price', price);
 
     let responce = await fetch(url, { method: 'POST', body: formData });
-    let responsePars = await responce.json();
+    
+    if (responce.ok) {
+        // let responsePars = await responce.json();
+        console.log(responce.ok, 'success');
+        showSuccessAlertHandler();
+    } else {
+        console.log(responce.ok, 'error');
+        showErrorAlertHandler();
+    }
 
     modalWindow.querySelector('form').reset();
-    return responsePars;
+    document.getElementById(itElemId).style.boxShadow = '';
+    // return responsePars;
 
 }
 
@@ -418,5 +438,9 @@ window.onload = function () {
     document.querySelector('.modal').querySelector('form').onchange = calculateTotalPrice;
 
     document.querySelector('#send-order').onclick = postOrder;
+    // document.querySelector('.btn-close').onclick = closeModalHandler;
+    // document.querySelector('#btn-cancel').onclick = closeModalHandler;
 
+    // let showModal = document.getElementById('show-order');
+    // showModal.addEventListener('show.bs.modal', newOrderModal);
 }
