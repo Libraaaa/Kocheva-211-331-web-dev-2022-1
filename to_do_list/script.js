@@ -65,7 +65,6 @@ async function loadTasks() {
     for (let i = 0; i < response.tasks.length; i++) {
         let taskValue = response.tasks[i];
         let task = createElemTask(taskValue);
-        // console.log(task);
         console.log(taskValue.name, taskValue.id);
         taskValue.status == "to-do" ? listToDo.append(task) : listDone.append(task);
     }
@@ -111,9 +110,8 @@ async function createNewTaskHandler(event) {
     // task.name = name;
     // task.desc = desc;
     if (action == 'create') {
-        let task = createTask(name, desc, status);
+        let task = await createTask(name, desc, status);
         let taskLi = createElemTask(task);
-        // console.log(taskLi);
         status == "to-do" ? listToDo.append(taskLi) : listDone.append(taskLi);
     } else
         if (action == 'edit') {
