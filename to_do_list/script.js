@@ -5,6 +5,9 @@ let listToDo = document.querySelector('#ToDo ul');
 let listDone = document.querySelector('#Done ul');
 // let closeBtn = document.querySelector('.btn-close');
 let url = new URL('http://tasks-api.std-900.ist.mospolytech.ru/api/tasks?api_key=50d2199a-42dc-447d-81ed-d68a443b697e');
+let alertSuccess = document.querySelector('.alert-success');
+let alertDanger = document.querySelector('.alert-danger');
+let spanError = document.querySelector('.error');
 
 let titles = {
     create: 'Новая задача',
@@ -28,8 +31,14 @@ async function createTask(name, desc, status) {
     taskCreateData.append('status', status);
 
     let response = await fetch(url, { method: 'POST', body: taskCreateData });
-    let responsePars = await response.json();
-    return responsePars;
+    if (response.ok) {
+        let responsePars = await response.json();
+        alertSuccess.classList.remove('d-none');
+        return responsePars;
+    } else {
+        spanError.innerHTML = response.status;
+        alertDanger.classList.remove('d-none');
+    }
 
     // let task = {
     //     name: name,
@@ -47,13 +56,20 @@ async function createTask(name, desc, status) {
 async function loadTasks() {
 
     let response = await fetch(url);
-    response = await response.json();
-    // return response;
+    if (response.ok) {
+        response = await response.json();
+    } else {
+        spanError.innerHTML = response.status;
+        alertDanger.classList.remove('d-none');
+    }
     for (let i = 0; i < response.tasks.length; i++) {
         let taskValue = response.tasks[i];
         let task = createElemTask(taskValue);
+        // console.log(task);
+        console.log(taskValue.name, taskValue.id);
         taskValue.status == "to-do" ? listToDo.append(task) : listDone.append(task);
     }
+    
 }
 
 // function loadTasks() {
@@ -68,9 +84,10 @@ async function loadTasks() {
 // на основе шаблона генерирует элемент новой задачи и заполняет его содержимым
 function createElemTask(task) {
     let taskLi = taskTemplate.content.firstElementChild.cloneNode(true);
-    taskLi.id = task['id'];
+    taskLi.id = task.id;
+    // console.log(taskLi.id);
     let name = taskLi.querySelector('.task-name');
-    name.innerHTML = task['name'];
+    name.innerHTML = task.name;
     return taskLi;
 }
 
@@ -96,6 +113,7 @@ async function createNewTaskHandler(event) {
     if (action == 'create') {
         let task = createTask(name, desc, status);
         let taskLi = createElemTask(task);
+        // console.log(taskLi);
         status == "to-do" ? listToDo.append(taskLi) : listDone.append(taskLi);
     } else
         if (action == 'edit') {
@@ -105,22 +123,29 @@ async function createNewTaskHandler(event) {
             taskData.append('desc', desc);
 
             url.pathname += '/' + taskId;
-            let resp = await fetch(url, { method: 'PUT', body: taskData });
+            let response = await fetch(url, { method: 'PUT', body: taskData });
+            if (response.ok) {
+                alertSuccess.classList.remove('d-none');
+            } else {
+                spanError.innerHTML = response.status;
+                alertDanger.classList.remove('d-none');
+            }
             url.pathname = '/api/tasks';
 
             // let taskElem = document.getElementById(taskId);
             document.getElementById(taskId).querySelector('.task-name').innerHTML = name;
             // formInputs['.task-status'].closest('.row').classList.remove('d-none');
 
-        } else
-            if (action == 'show') {
-                // let taskId = formInputs['task-id'].value;
-                // let  task = localStorage.getItem(`task-${taskId}`);
-                // task = JSON.parse(task);
-                // task.name = name;
-                // task.desc = desc;
-                // localStorage.setItem(`task-${taskId}`, JSON.stringify(task));
-            }
+        }
+    // else
+    // if (action == 'show') {
+    // let taskId = formInputs['task-id'].value;
+    // let  task = localStorage.getItem(`task-${taskId}`);
+    // task = JSON.parse(task);
+    // task.name = name;
+    // task.desc = desc;
+    // localStorage.setItem(`task-${taskId}`, JSON.stringify(task));
+    // }
 
     // formInputs['task-name'].removeAttribute('disabled');
     // formInputs['task-desc'].removeAttribute('disabled');
@@ -163,8 +188,15 @@ async function deleteTaskBtnHandler(event) {
     let form = event.target.closest('.modal').querySelector('form');
     let taskId = form.elements['task-id'].value;
     url.pathname += '/' + taskId;
-    let repsonseFromServer = await fetch(url, { method: 'DELETE' });
-    repsonseFromServer = await repsonseFromServer.json();
+    let responseFromServer = await fetch(url, { method: 'DELETE' });
+    if (responseFromServer.ok) {
+        responseFromServer = await responseFromServer.json();
+        alertSuccess.classList.remove('d-none');
+    } else {
+        spanError.innerHTML = responseFromServer.status;
+        alertDanger.classList.remove('d-none');
+    }
+
     url.pathname = '/api/tasks';
     // // удаление данных из localStorage
     // localStorage.removeItem(`task-${taskId}`);
@@ -172,14 +204,6 @@ async function deleteTaskBtnHandler(event) {
     task.remove();
 
 }
-
-// async function deleteTask(taskId) {
-//     url.pathname += '/' + taskId;
-//     let repsonseFromServer = await fetch(url, { method: 'DELETE' });
-//     let deletedId = await repsonseFromServer.json();
-//     url.pathname = '/api/tasks';
-//     return deletedId;
-// }
 
 // перемещение задач по спискам
 async function arrowHandler(event) {
@@ -198,6 +222,12 @@ async function arrowHandler(event) {
     formData.append('status', task.status);
     // return task;
     let response = await fetch(url, { method: 'PUT', body: formData });
+    // if (response.ok) {
+    //     alertSuccess.classList.remove('d-none');
+    // } else {
+    //     spanError.innerHTML = response.status;
+    //     alertDanger.classList.remove('d-none');
+    // }
 
     url.pathname = '/api/tasks';
 }
